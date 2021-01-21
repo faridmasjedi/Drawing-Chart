@@ -17,7 +17,7 @@ server.get('/todo', (req,res) => {
     res.render('todo.ejs');
 })
 
-const PORT = 2357;
+const PORT = process.env.PORT || 2357;
 server.listen(PORT, () => {
     console.log(`
     -------------------------------
