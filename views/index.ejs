@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style.css">
+        <script defer src="index.js"></script>
+        <title>Drawing</title>
+        
+    </head>
+
+    <body>
+        <div id='container'>
+            <header>
+                <h1>Chart-r</h1>
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/documentation">Documentation</a>
+                    <a href="/todo">Todo</a>
+                </nav>
+            </header>
+            <div id='forms'>
+                <div id="inlineDiv">
+                    <div id="form">
+                        <p><label>Equation</label></p>
+                        <p><label>X start</label></p>
+                        <p><label>X end</label></p>
+                        <p><label>Steps</label></p>
+                        <p><label>Color</label></p>
+                        <p><label>Scale on x-axis  </label></p>
+                        <p><label id='scaleXLabel'>X scale value</label></p>
+                        <p><label>Scale on Y-axis</label></p>
+                        <p><label id='scaleYLabel'>Y scale value</label></p>
+                        <p><label>Line/Points</label></p>
+                        <p><label>Speed of drawing </label></p>
+                    </div>
+                </div>
+                <div id="inlineDiv">
+                    <div id="form">
+                        <p><input id='eq'/></p>
+                        <p><input id='x0' value='-100'/></p>
+                        <p><input id='x1' value="100"/></p>
+                        <p><input id='step' value='0.01'/></p>
+                        <p><input type="color" id="color" value="#0275d8"/></p>
+                        <p>
+                            <select id="scaleX">
+                                <option value='without'>Without Scaling</option>
+                                <option value="with">With Scaling</option>
+                            </select>
+                        </p>
+                        <p><input id="scaleXValue" value='10' readonly/></p>
+                        <p>
+                            <select id="scaleY">
+                                <option value='without'>Without Scaling</option>
+                                <option value="with">With Scaling</option>
+                            </select>
+                        </p>
+                        <p><input id="scaleYValue" value='50' readonly/></p>
+                        <p>
+                            <select id="line-points">
+                                <option value="points">Points</option>
+                                <option value='line'>Line</option>
+                            </select>
+                        </p>
+                        <p><input type="range" id="range" min="0" max="10" value="10"/></p>
+                    </div>
+                </div>
+                <button id='button'>Start Drawing</button>
+            </div>
+            
+            <div id="canvasDiv">
+                <canvas id="canvas" width='450' height='450'></canvas>
+            </div>
+            <div id="legend">
+                <h2>Legend</h2>  
+            </div>
+            
+        </div>
+    </body>
+</html>

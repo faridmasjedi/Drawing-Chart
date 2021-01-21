@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style.css">
+        <title>Documention</title>
+    </head>
+    <body>
+        <div id='container'>
+            <header>
+                <h1>Chart-r</h1>
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/documentation">Documentation</a>
+                    <a href="/todo">Todo</a>
+                </nav>
+            </header>
+            <div id="documentation">
+                <h2>- How to use this app -</h2>
+
+                <hr/>
+                <h3>< Equation ></h3>
+                <h4>
+                    -- Write the equation. The point is what you write in the input, 
+                    it is gonna be understood by the app.
+                    <br/>
+                    -- You can write <span><em>(sinx+x^2)^(1/2)</em></span> and it will
+                    understand it.
+                    <br/>
+                    -- The point is up to now, this works on polynomial of any degree, 
+                    trigonometry functions, rational functions.
+                    <br/>
+                    -- Still it does not work on exponential function, logarithmic function and
+                    many others. But I am working on them.
+                </h4>
+
+                <hr/>
+                <h3>< X start ></h3>
+                <h4>
+                    -- Each pixel in the canvas represent a point with x and y position. X start 
+                    is going to be the x of the first point.
+                    <br/>
+                    -- By default X start is -100.
+                </h4>
+
+                <hr/>
+                <h3>< X end ></h3>
+                <h4>
+                    -- Each pixel in the canvas represent a point with x and y position. X end 
+                    is going to be the x of the last point.
+                    <br/>
+                    -- By default X start is +100.
+                </h4>
+
+                <hr/>
+                <h3>< Steps ></h3>
+                <h4>
+                    -- Steps is going to make the next x for the equation. 
+                    <br/>
+                    -- x(next) = x(last one) + Steps.
+                </h4>
+
+                <hr/>
+                <h3>< Color ></h3>
+                <h4>
+                    -- Color is the input with color type. This gonna make the color of the chart. 
+                </h4>
+
+                <hr/>
+                <h3>< Scale on x-axis ></h3>
+                <h4>
+                    -- By default the x and y of each point is without scale. But sometime like 
+                    <span><em>sinx</em></span> function the output is between -1 and 1 and in canvas, 
+                    cause it has 450px in each side, the chart needed to be scaled.
+                    <br/>
+                    -- We can choose <em>With Scaling</em> to make x axis to be scaled by the X scale value.
+                </h4>
+
+                <hr/>
+                <h3>< X scale value ></h3>
+                <h4>
+                    -- By default this input has the <em>readonly</em> attribute. 
+                    <br/>
+                    -- By choosing the Scale on x-axis to be <em>With Scaling</em>, the attribute of the X 
+                    scale value input going to be false and we can choose a number for scaling the value of X.
+                </h4>
+
+                <hr/>
+                <h3>< Scale on y-axis ></h3>
+                <h4>
+                    -- By default the x and y of each point is without scale. But sometime like 
+                    <span><em>sinx</em></span> function the output is between -1 and 1 and in canvas, 
+                    cause it has 450px in each side, the chart needed to be scaled.
+                    <br/>
+                    -- We can choose <em>With Scaling</em> to make y axis to be scaled by the Y scale value.
+                </h4>
+
+                <hr/>
+                <h3>< Y scale value ></h3>
+                <h4>
+                    -- By default this input has the <em>readonly</em> attribute. 
+                    <br/>
+                    -- By choosing the Scale on y-axis to be <em>With Scaling</em>, the attribute of the Y 
+                    scale value input going to be false and we can choose a number for scaling the value of Y.
+                </h4>
+
+                <hr/>
+                <h3>< Line/Points ></h3>
+                <h4>
+                    -- We can choose if we want to have the chart made out of points or have the line between 
+                    points. 
+                    <br/>
+                    -- The line chart has an error. For example, in <span><em>tanx</em></span> equation, we have 
+                    Infinity and -Infinity as an output in some x. The line chart gonna make a connection between them,
+                    and it is not true. This will be fixed in the future. But if we choose to have point chart, and even make 
+                    the Steps to be less, then it is gonna give us the true chart.
+                </h4>
+
+                <hr/>
+                <h3>< Speed of drawing ></h3>
+                <h4>
+                    -- We can choose the speed of drawing.
+                    <br/>
+                    -- The most speed gonna give us each point in 4ms.
+                    <br/>
+                    -- The least speed gonna give us each point in 1s.
+                </h4>
+
+            </div>
+        </div>
+    </body>
+</html>
