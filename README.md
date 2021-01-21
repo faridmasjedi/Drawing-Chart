@@ -22,7 +22,7 @@ Making a server using express, ejs for making views.
 
 ## Link to the app
 
-#### [https://drawing-chart.herokuapp.com/](https://drawing-chart.herokuapp.com/){:target="\_blank"}
+#### [https://drawing-chart.herokuapp.com/](https://drawing-chart.herokuapp.com/ target="\_blank")
 
 #
 
