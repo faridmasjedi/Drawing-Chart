@@ -87,7 +87,9 @@ label {
   margin-bottom: 25px;
 }
 
-#legend {
+#legend,
+#drawing,
+#computing {
   max-width: 400px;
   width: 100%;
   border: 3px solid green;
@@ -112,4 +114,7 @@ a:hover {
 }
 span {
   color: green;
+}
+#points {
+  width: 80%;
 }

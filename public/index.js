@@ -48,6 +48,9 @@
                     arr = [...arr.slice(0,openPran), calcInsidePran , ...arr.slice(closePran+1)]
                 }else if (checking < 4){
                     arr = [...arr.slice(0,openPran), arr[openPran+1] , ...arr.slice(closePran+1)]
+                }else{
+                    console.error('more than length=4');
+                    break;
                 }
             }
 
@@ -149,8 +152,13 @@
                 
 
                 if (arr.indexOf(selectAction)!==0){
-                    calculation = calculate(arr[firstNum],selectAction,arr[secondNum]);
-                    arr = [...arr.slice(0,firstNum), calculation, ...arr.slice(secondNum+1)];
+                    if (arr[firstNum] !== "("){
+                        calculation = calculate(arr[firstNum],selectAction,arr[secondNum]);
+                        arr = [...arr.slice(0,firstNum), calculation, ...arr.slice(secondNum+1)];
+                    }else{
+                        calculation = calculate(0,selectAction,arr[secondNum]);
+                        arr = [...arr.slice(0,firstNum), calculation, ...arr.slice(secondNum+1)];
+                    }
                 }else{
                     calculation = calculate(0,selectAction,arr[secondNum]);
                     arr = [calculation, ...arr.slice(secondNum+1)];
@@ -235,7 +243,7 @@
         }
         
         result = result.map( (elm) => {
-            if (elm === "x"){
+            if (elm === "x" || elm === "X"){
                 return inp;
             }else if( !isNaN(Number(elm)) ){
                 return Number(elm);
@@ -250,7 +258,7 @@
 
     const eq = (inp) => {
         let arr = eqSplit(inp);
-        
+
         let result =[];
         let index = 0;
         for (i=0; i<arr.length; i++){
@@ -268,23 +276,21 @@
         }
 
         arr = result;
-
         let trying = 0;
-
         while (arr.indexOf('(') !== -1){
             let firstOpenPran = arr.indexOf('(');
             let firstClosePran = arr.indexOf(')');
-
             let result =[];
             let indexFound;
             for (i=firstOpenPran+1;i<firstClosePran; i++){
                 if (arr[i] === "("){
                     indexFound = i;
                     result = arr.slice(i,firstClosePran+1);
-                    break;
-                }else{
-                    result = arr;
                 }
+                
+            }
+            if (result.length === 0) {
+                result = arr;
             }
 
             if (result.length === arr.length){
@@ -296,17 +302,24 @@
                 result = calculationPriority(result,"+-");
 
                 arr = [...arr.slice(0,firstOpenPran), result[0], ...arr.slice(firstClosePran+1)];
+
                 break;
             }else{
 
-                result = calculationPriority(result,"(");
                 result = calculationPriority(result,"trigonometry");
                 result = calculationPriority(result,"^");
                 result = calculationPriority(result,"*/");
                 result = calculationPriority(result,"+-");
-                
+
+                result = calculationPriority(result,"(");
+
+                result = calculationPriority(result,"trigonometry");
+                result = calculationPriority(result,"^");
+                result = calculationPriority(result,"*/");
+                result = calculationPriority(result,"+-");
+
                 arr = [...arr.slice(0,indexFound), result[0], ...arr.slice(firstClosePran+1)]
-                
+
                 trying++
                 if (trying>100){
                     console.log('error');
@@ -315,8 +328,8 @@
             }
             
         }
-
         arr = calculationPriority(arr,"(");
+
         arr = calculationPriority(arr,"trigonometry");
         arr = calculationPriority(arr,"^");
         arr = calculationPriority(arr,"*/");
@@ -336,27 +349,70 @@
         legend.appendChild(h2); 
     }
 
+    
+    const drawWithoutTime = (start,end,color,scaleX,scaleY,step,structure,scaleValueX,scaleValueY) => {
+        let endBoundry = start;
+        let xScale;
+        let yScale1;
+        let yScale2;
+        let resultX = [];
+        let resultY1 = [];
+        let resultY2 = [];
+        
+        while (endBoundry <= end){
+            if (scaleX === 'without') {
+                xScale = endBoundry;
+            }else{
+                xScale = scaleValueX*endBoundry;
+            }
+            if (scaleY === 'without'){
+                yScale1 = (225 - eq(endBoundry-0.01));
+                yScale2 = (225 - eq(endBoundry+0.01));
+            }else{
+                yScale1 =  (225 - scaleValueY*eq(endBoundry-0.01));
+                yScale2 =  (225 - scaleValueY*eq(endBoundry+0.01))
+            }
+            resultX.push(xScale);
+            resultY1.push(yScale1);
+            resultY2.push(yScale2);
+            endBoundry = endBoundry + step;
 
-    const draw = (start,end,color,scaleX,scaleY,step,structure,scaleValueX,scaleValueY) => {
+        }
+        for (i=0; i<resultX.length; i++){
+            ctx.beginPath();
+
+            if (structure === 'line') {
+                ctx.moveTo(225 + resultX[i] -0.01,resultY1[i]);
+                ctx.lineTo(225 + resultX[i] +0.01,resultY2[i]);
+            }else{
+                ctx.arc(225 + resultX[i] -0.01,resultY1[i], 1, 0, 2 * Math.PI);
+            }
+            ctx.strokeStyle = color;
+            ctx.stroke();
+        }
+           
+    }
+
+
+    const draw = (start,end,color,scaleX,scaleY,step,structure,scaleValueX,scaleValueY,speed) => {
         let endBoundry = start;
         let xScale;
 
         let yScale1;
         let yScale2;
 
-        let speedTag = document.getElementById('range');
-        
-        let speed = Number(speedTag.value) || 0.1;
-        speed = (4-1000)/(10-0.1)*(speed-10)+ 4
+        let workingAlarm = document.getElementById('drawing');
+        workingAlarm.style.display = 'block';
 
         const lineDrawing = () => {
             
 
             if (endBoundry > end){
                 clearInterval(y);
+                workingAlarm.style.display = 'none';
             }else{
                 ctx.beginPath();
-
+                
                 if (scaleX === 'without') {
                     xScale = endBoundry;
                 }else{
@@ -375,7 +431,6 @@
                 }else{
                     ctx.arc(225 + xScale -0.01,yScale1, 1, 0, 2 * Math.PI);
                 }
-
                 endBoundry = endBoundry + step;
 
 
@@ -387,9 +442,14 @@
         let y = setInterval(lineDrawing, speed);
     }
 
-    const inputValue = (tag) => {
+    const inputValue = (tag,str) => {
         let inp = document.getElementById(tag);
         let val = inp.value;
+        if (val === "" && str === 'start') {
+            val = -50;
+        }else if (val === "" && str === 'end'){
+            val = 50;
+        }
         val = Number(val);
         return val;
     }
@@ -472,7 +532,6 @@
         let scaleXValue = document.getElementById('scaleXValue');
         let scaleYValue = document.getElementById('scaleYValue');
         
-        
         let scaleValueX = Number(scaleXValue.value) || 10;
         let scaleValueY = Number(scaleYValue.value) || 50;
 
@@ -481,16 +540,23 @@
         let stepX = Number(step.value) || 0.01;
         let line_points = lineOrPoints.value;
 
-        let x0 = inputValue('x0') || -50;
-        let x1 = inputValue('x1') || 50;
+        let x0 = inputValue('x0','start');
+        let x1 = inputValue('x1','end');
         
 
         let color = inputColor();
         
         outputEq(color,equation.value);
         
-
-        draw(x0,x1,color,scaleX,scaleY,stepX,line_points,scaleValueX,scaleValueY);
+        let speedTag = document.getElementById('range');
+        let speed = Number(speedTag.value);
+        if ( speed === 0 ) {
+            drawWithoutTime(x0,x1,color,scaleX,scaleY,stepX,line_points,scaleValueX,scaleValueY);
+        }else{
+            speed = (4-1000)/(10-0.1)*(speed-10)+ 4
+            draw(x0,x1,color,scaleX,scaleY,stepX,line_points,scaleValueX,scaleValueY,speed);
+        }
+        
         
     })
 
