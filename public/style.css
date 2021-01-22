@@ -76,6 +76,8 @@ label {
   margin-top: 150px;
   border: 1px solid black;
   box-shadow: 0 0 25px black;
+  max-width: 860px;
+  max-height: 700px;
 }
 #scaleXValue,
 #scaleYValue {
