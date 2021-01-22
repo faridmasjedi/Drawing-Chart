@@ -303,7 +303,6 @@
 
                 arr = [...arr.slice(0,firstOpenPran), result[0], ...arr.slice(firstClosePran+1)];
 
-                break;
             }else{
 
                 result = calculationPriority(result,"trigonometry");
@@ -329,7 +328,6 @@
             
         }
         arr = calculationPriority(arr,"(");
-
         arr = calculationPriority(arr,"trigonometry");
         arr = calculationPriority(arr,"^");
         arr = calculationPriority(arr,"*/");
